@@ -1,0 +1,109 @@
+def matrix_chain_multiplication(p):
+    n = len(p) - 1
+    m = [[0] * (n + 1) for _ in range(n + 1)]
+    s = [[0] * (n + 1) for _ in range(n + 1)]  
+
+    for length in range(2, n + 1):
+        for i in range(1, n - length + 2):
+            j = i + length - 1
+            m[i][j] = float('inf')
+            for k in range(i, j):
+                q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j]
+                if q < m[i][j]:
+                    m[i][j] = q
+                    s[i][j] = k 
+
+    return m, s
+
+def print_optimal_parenthesization(s, i, j):
+    if i == j:
+        print("A" + str(i), end="")
+    else:
+        print("(", end="")
+        print_optimal_parenthesization(s, i, s[i][j])
+        print_optimal_parenthesization(s, s[i][j] + 1, j)
+        print(")", end="")
+
+def main():
+    while True:
+        print("\nMatrix Chain Multiplication")
+        print("1. Calculate minimum number of scalar multiplications")
+        print("2. Exit")
+       
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            matrix_dimensions = []
+            num_matrices = int(input("Enter the number of matrices: "))
+            for i in range(num_matrices):
+                dim = int(input(f"Enter the dimension of matrix {i+1}: "))
+                matrix_dimensions.append(dim)
+
+            minimum_scalar_multiplications = matrix_chain_multiplication(matrix_dimensions)
+            print("Minimum scalar multiplications required:", minimum_scalar_multiplications)
+        elif choice == "2":
+            print("Exit")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+def matrix_chain_multiplication(p):
+    n = len(p) - 1
+    m = [[0] * (n + 1) for _ in range(n + 1)]
+    s = [[0] * (n + 1) for _ in range(n + 1)]  
+
+    for length in range(2, n + 1):
+        for i in range(1, n - length + 2):
+            j = i + length - 1
+            m[i][j] = float('inf')
+            for k in range(i, j):
+                q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j]
+                if q < m[i][j]:
+                    m[i][j] = q
+                    s[i][j] = k 
+
+    return m, s
+
+def print_optimal_parenthesization(s, i, j):
+    if i == j:
+        print("A" + str(i), end="")
+    else:
+        print("(", end="")
+        print_optimal_parenthesization(s, i, s[i][j])
+        print_optimal_parenthesization(s, s[i][j] + 1, j)
+        print(")", end="")
+
+def main():
+    while True:
+        print("\nMatrix Chain Multiplication")
+        print("1. Calculate minimum number of scalar multiplications")
+        print("2. Exit")
+       
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            matrix_dimensions = []
+            num_matrices = int(input("Enter the number of matrices: "))
+            for i in range(num_matrices):
+                dim = int(input(f"Enter the dimension of matrix {i+1}: "))
+                matrix_dimensions.append(dim)
+
+            minimum_scalar_multiplications = matrix_chain_multiplication(matrix_dimensions)
+            print("Minimum scalar multiplications required:", minimum_scalar_multiplications)
+        elif choice == "2":
+            print("Exit")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+if __name__ == "__main__":
+    main()
