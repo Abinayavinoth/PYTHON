@@ -1,0 +1,93 @@
+def dijkstra(graph, start):
+    distances = {vertex: float('infinity') for vertex in graph}
+    distances[start] = 0
+    pq = [(0, start)]
+    
+    while pq:
+        current_distance, current_vertex = min(pq)
+        pq.remove((current_distance, current_vertex))
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                pq.append((distance, neighbor))
+    
+    return distances
+graph = {
+    'A': {'B': 3, 'C': 2},
+    'B': {'A': 3, 'C': 1, 'D': 6},
+    'C': {'A': 2, 'B': 1, 'D': 1},
+    'D': {'B': 6, 'C': 1}
+}
+
+start_vertex = 'A'
+distances = dijkstra(graph, start_vertex)
+print("Shortest distances from vertex", start_vertex, ":", distances)
+
+
+def dijkstra(graph, start):
+    num_vertices = len(graph)
+    
+    distances = [float('infinity')] * num_vertices
+    distances[start] = 0
+    visited = [False] * num_vertices
+ 
+    for _ in range(num_vertices):
+        min_distance = float('infinity')
+        min_vertex = -1
+        for v in range(num_vertices):
+            if not visited[v] and distances[v] < min_distance:
+                min_distance = distances[v]
+                min_vertex = v
+    
+        visited[min_vertex] = True
+        for neighbor in range(num_vertices):
+            if graph[min_vertex][neighbor] > 0 and not visited[neighbor]:
+                new_distance = distances[min_vertex] + graph[min_vertex][neighbor]
+                if new_distance < distances[neighbor]:
+                    distances[neighbor] = new_distance
+    
+    return distances
+graph = [
+    [0, 3, 2, 0],
+    [3, 0, 1, 6],
+    [2, 1, 0, 1],
+    [0, 6, 1, 0]
+]
+
+start_vertex = 0
+distances = dijkstra(graph, start_vertex)
+print("Shortest distances from vertex", start_vertex, ":", distances)
+
+
+def bellman_ford(graph, start):
+    num_vertices = len(graph)
+    distances = [float('infinity')] * num_vertices
+    distances[start] = 0
+    for _ in range(num_vertices - 1):
+        for u in range(num_vertices):
+            for v in range(num_vertices):
+                if graph[u][v] != 0: 
+                    if distances[u] + graph[u][v] < distances[v]:
+                        distances[v] = distances[u] + graph[u][v]
+    
+    for u in range(num_vertices):
+        for v in range(num_vertices):
+            if graph[u][v] != 0: 
+                if distances[u] + graph[u][v] < distances[v]:
+                    print("Graph contains negative cycle")
+                    return
+    
+    return distances
+
+graph = [
+    [0, -1, 4, 0, 0],
+    [0, 0, 3, 2, 2],
+    [0, 0, 0, 0, 0],
+    [0, 1, 5, 0, 0],
+    [0, 0, 0, -3, 0]
+]
+
+start_vertex = 0
+distances = bellman_ford(graph, start_vertex)
+print("Shortest distances from vertex", start_vertex, ":", distances)
