@@ -1,0 +1,85 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
+from sklearn import datasets
+from sklearn import svm
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
+
+iris=datasets.load_iris()
+x=iris.data
+y=iris.target
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.6,random_state=1)
+print(x)
+print(y)
+print(iris)
+trainning=60/100
+testing=40/100
+
+from sklearn import svm
+svm_clf = svm.SVC(kernel='linear')  
+svm_clf.fit(x_train, y_train)
+svm_clf_pred = svm_clf.predict(x_test)
+print('Obtained classification results while testing:', svm_clf_pred)
+print('Actual classification:', y_test)
+
+
+print('Accuracy of support vector machine:',accuracy_score(y_test,svm_clf_pred))
+print('Precision of  support vector Machine:',precision_score(y_test,svm_clf_pred,average='weighted'))
+print('recall of support vector machine:',recall_score(y_test,svm_clf_pred,average='weighted'))
+print('F1-score of support vector machine:',f1_score(y_test,svm_clf_pred,average='weighted'))
+
+gnb = GaussianNB()
+
+gnb.fit(x_train, y_train)
+
+gnb_pred = gnb.predict(x_test)
+
+print("Accuracy of Gaussian Naive Bayes: ", accuracy_score(y_test, gnb_pred))
+
+print("Precision of Gaussian Naive Bayes: ", precision_score(y_test, gnb_pred, average='weighted'))
+print("Recall of Gaussian Naive Bayes: ", recall_score(y_test, gnb_pred, average='weighted'))
+print("F1-Score of Gaussian Naive Bayes: ", f1_score(y_test, gnb_pred, average='weighted'))
+
+
+dt = DecisionTreeClassifier(random_state=0)
+
+dt.fit(x_train, y_train)
+
+dt_pred = dt.predict(x_test)
+
+print("Accuracy of Decision Tree Classifier: ", accuracy_score(y_test, dt_pred))
+
+print("Precision of Decision Tree Classifier: ", precision_score(y_test, dt_pred, average='weighted'))
+print("Recall of Decision Tree Classifier: ", recall_score(y_test, dt_pred, average='weighted'))
+print("F1-Score of Decision Tree Classifier: ", f1_score(y_test, dt_pred, average='weighted')) 
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# Read CSV file
+data = pd.read_csv('heart.csv')
+
+# Assume the target column is 'target' and features are all columns except 'target'
+X = data.drop('output', axis=1)
+y = data['output']
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
+
+# Initialize a decision tree classifier (you can choose another algorithm)
+model = DecisionTreeClassifier()
+
+# Train the model on the training set
+model.fit(X_train, y_train)
+
+# Make predictions on the testing set
+predictions = model.predict(X_test)
+
+# Evaluate the model's accuracy
+accuracy = accuracy_score(y_test, predictions)
+print(f"Accuracy: {accuracy}")
