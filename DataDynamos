@@ -1,0 +1,44 @@
+#PUZZLE 1
+import pandas as pd
+
+df1 = pd.read_csv("new.csv")
+
+ot1=df1.groupby('department_name').agg({'Spectral_salary':'mean'})
+print(ot1.sort_values(by=["Spectral_salary"], ascending=False))
+
+  #PUZZLE2 AND PUZZLE 3
+
+  import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+"""df= pd.read_csv("final_dataset.csv")
+print(df)
+data=pd.DataFrame(df,columns=[ "Unnamed: 0.1", "x"])
+data=pd.DataFrame(df,columns=[ "Unnamed: 0", "y"])
+data.plot(x=["Unnamed: 0.1",'x'],y=["Unnamed: 0",'y'],kind="line")
+#data1=pd.DataFrame(df,columns=["x", "y"])
+#data1.plot(x="x",y="y",kind="line")
+plt.show()"""
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+ 
+# read the dataset
+df = pd.read_csv('Hungry.csv')
+ 
+# get the locations
+X = df.iloc[:, :-1]
+y = df.iloc[:, -1]
+ 
+# split the dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.05, random_state=0)
+data=pd.DataFrame(df,columns=[ "X_train", "y_train"])
+data=pd.DataFrame(df,columns=[ "X_test", "y_test"])
+data.plot(x=["X_train", "y_train"],y=["X_test", "y_test"],kind="line")
+#data1=pd.DataFrame(df,columns=["x", "y"])
+#data1.plot(x="x",y="y",kind="line")
+plt.show()
